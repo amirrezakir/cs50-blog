@@ -28,7 +28,7 @@ def login():
         else:   
               flash("Email does not exits.", category="erorr")    
 
-    return render_template("login.html", user=current_user)
+    return render_template("login1.html", user=current_user)
 
 @auth.route("/sing-up", methods=['GET', 'POST'])
 def singup():
