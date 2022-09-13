@@ -7,6 +7,7 @@
         <div class="card-header d-flex justify-content-between align-iteams-center">
             <a href="/posts/{{ post.user.username }}">{{post.user.username}}</a>
             {% if user.id == post.author %}
+            
             <div class="btn-group">
                 <button 
                 type="button" 
@@ -14,11 +15,11 @@
                 data-bs-toggle="dropdown"></button>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a>
-                        
+                        <a href="/delete-post/{{post.id}}" class="dropdown-item btn btn-danger">Delete</a>
                     </li>
                 </ul>
             </div>
+
             {% endif %} 
         </div>
         <div class="card-body"> 
