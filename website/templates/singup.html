@@ -1,50 +1,32 @@
 {% extends "base.html" %}
 {% block title %}Sing Up{% endblock %}
+{% block link %}<link rel="stylesheet" href="{{ url_for('static', filename='styles/singup.css') }}">{% endblock %}
 
-{% block content %} 
-<form method="POST">
-    <div class="p-3 mb-2 bg-success text-white">
-    <h3 align="center">Sing UP</h3>
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input 
-        type="text" 
-        id="username" 
-        name="username" 
-        class="form-control" 
-        placeholder="Enter Username">
-
-        <label for="Email">Email Address</label>
-        <input 
-        type="text" 
-        id="email" 
-        name="email" 
-        class="form-control" 
-        placeholder="Enter Email Adress">
-
-
-        <label for="password1">Password</label>
-        <input 
-        type="password" 
-        id="password1" 
-        name="password1" 
-        class="form-control" 
-        placeholder="Enter Password">
-
-        <label for="pass</div>word2">Password Again</label>
-        <input 
-        type="password" 
-        id="password2" 
-        name="password2" 
-        class="form-control" 
-        placeholder="Enter Password Again">
-        <br>
-
-        <div align="center">
-            <button class="btn btn-primary" type="submit">Sing Up</button>
-        </div>
-    </div>
-</div>
-</form>
+{% block content %}
+	<div id="login-form-wrap">
+	  <h2>Sing UP</h2>
+	  <form id="login-form" method="post">
+		<p>
+		<input type="text" id="username" name="username" placeholder="Enter Username" required>
+		<i class="validation"><span></span><span></span></i>
+		</p>
+        <p>
+        <input type="text" id="email" name="email" placeholder="Enter Email Address" required>
+        <i class="validation"><span></span><span></span></i>
+        <p>
+        <input type="password" id="password1" name="password1" placeholder="Enter password" required>
+        <i class="validation"><span></span><span></span></i>
+        </p>
+        <input type="password" id="password2" name="password2" placeholder="Enter Password Again" required>
+        <i class="validation"><span></span><span></span></i>
+        </p>
+		<p>
+		<input type="submit" id="login" value="Login">
+		</p>
+	  </form>
+	  <div id="create-account-wrap">
+		<p>Not a member? <a href="/sing-up">Create Account</a><p>
+	  </div>
+	</div>
 
 {% endblock %}
