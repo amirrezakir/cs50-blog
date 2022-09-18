@@ -1,14 +1,15 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %}
+{% block link %}<link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">{% endblock %}
 {% block content %}
 	<div id="login-form-wrap">
 	  <h2>Login</h2>
 	  <form id="login-form" method="post">
 		<p>
-		<input type="text" id="username" name="password" placeholder="Enter password" required>
+		<input type="email" id="email" name="email" placeholder="Email Address" required>
 		<i class="validation"><span></span><span></span></i>
 		</p>
 		<p>
-		<input type="email" id="email" name="email" placeholder="Email Address" required>
+		<input type="password" id="username" name="password" placeholder="Enter password" required>
 		<i class="validation"><span></span><span></span></i>
 		</p>
 		<p>
@@ -16,7 +17,7 @@
 		</p>
 	  </form>
 	  <div id="create-account-wrap">
-		<p>Not a member? <a href="#">Create Account</a><p>
+		<p>Not a member? <a href="{{ url_for('auth.singup') }}">Create Account</a><p>
 	  </div>
 	</div>
 {% endblock %}
