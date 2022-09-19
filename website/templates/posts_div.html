@@ -24,6 +24,52 @@
         </div>
         <div class="card-body"> 
             <div class="card-text">{{post.text}}</div>
+            <br>
+           <div class="collapse" id="comments-{{post.id}}">
+                <div class="card"> 
+                    <div class="card-body" id="comments-expanded-{{post.id}}">
+                        {% for comment in post.comments %}
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <a href="/posts/{{comment.user.username}}">{{comment.user.username}}  
+                                    </a>: {{comment.text}}
+                                </div>
+                                <div>
+                                    <small class="text-muted">{{comment.date_created}}</small>
+                                    {% if user.id == comment.author or user.id == post.author %}
+                                    <div class="btn-group">
+                                        <button 
+                                        type="button" 
+                                        class="btn btn-sm btn-primary dropdown-toggle" 
+                                        data-bs-toggle="dropdown"></button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="/delete-comment/{{comment.id}}" class="dropdown-item">Delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div> 
+                        {% endfor %}
+                    </div>
+                </div>
+                <br>
+           </div>
+           <p class="card-text">
+            {% if post.comments|length > 0 %}
+                    <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
+                        <small>View {{post.comments|length}} Comments</small>
+                    </a>
+            {% else %}
+                    <small class="text-muted">No Comments</small>
+            {% endif %}
+           </p>
+
+            <form class="mb-3 input-group" method="post" action="/create-comment/{{post.id}}">
+                <input type="text" class="form-control" id="text" name="text" placeholder="Comment something" autocomplete="off">
+                <button class="btn btn-primary" type="submit">Comment</button>
+            </form>
         </div>
         <div class="card-footer text-muted">{{post.date_created}}</div>
     </div>
