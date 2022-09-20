@@ -1,11 +1,16 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user
-from .models import Post, User, Comment
+from .models import Post, User, Comment, Like
 from . import db
 
 views = Blueprint("views", __name__)
 
 @views.route("/")
+@views.route("/about")
+def about():
+    return render_template("about.html")
+
+
 @views.route("/home")
 @login_required
 def home():
@@ -95,3 +100,23 @@ def delete_comment(comment_id):
         
 
     return redirect(url_for("views.home"))
+
+@views.route("/like-post/<post_id>", methods=["POST"])
+@login_required
+def like_post(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    like = Like.query.filter_by(author=current_user.id, post_id=post_id).first()
+    
+    if not post:
+        return jsonify({"erorr": "Post does not exist"}, 400) 
+
+    elif like:
+        db.session.delete(like)
+        db.session.commit()
+
+    else:
+        like = Like(author=current_user.id, post_id=post_id)
+        db.session.add(like)
+        db.session.commit()
+    
+    return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author, post.likes)})
