@@ -6,6 +6,7 @@
     <div class="card border-dark">
         <div class="card-header d-flex justify-content-between align-iteams-center">
             <a href="/posts/{{ post.user.username }}">{{post.user.username}}</a>
+            <div class="card-text">{{post.title}}</div>
             <div>
                 <span id="likes-count-{{post.id}}">{{ post.likes|length }}</span>
 
