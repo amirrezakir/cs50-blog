@@ -121,3 +121,25 @@ def like_post(post_id):
         db.session.commit()
     
     return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author, post.likes)})
+
+
+@views.route("/profile/<id>", methods=["GET", "POST"])
+@login_required
+def profile(id):
+    image_file = url_for('static', filename='pictures/' + current_user.image_file)
+    new_user = User.query.get(id)
+
+    if request.method == "POST":
+        new_user.username = request.form.get("username")
+        new_user.email = request.form.get("email")
+
+        try:
+            db.session.commit()
+            flash("User updated!", category="success")
+            return render_template("profile.html", new_user=new_user, user=current_user.id)
+        except:
+            flash("Something went wrong! try again.", category="erorr")
+            return redirect(url_for("views.home"))
+
+    else:
+        return render_template("profile.html", image_file=image_file, user=current_user.id, new_user=new_user)
