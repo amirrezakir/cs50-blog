@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %}Profile{% endblock %}
+{% block content %}
+    <div class="content-section">
+        <div class="media">
+            <img class="rounded-circle account-img" src="{{ image_file }}">
+            <div class="media-body">
+                <h2 class="account-heading">{{ current_user.username }}</h2>
+                <p class="text-secondary">{{ current_user.email }}</p>
+            </div>
+        </div>
+        <h2>Profile</h2>
+        <form id="login-form" method="post" action="/profile/{{ new_user.id }}">
+            <p>
+            <input type="text" id="username" name="username" value="{{ new_user.username }}" required>
+            <i class="validation"><span></span><span></span></i>
+            </p>
+            <p>
+            <input type="email" id="email" name="email" value="{{ new_user.email }}" required>
+            <i class="validation"><span></span><span></span></i>
+            </p>
+            <p>
+            <button type="submit" class="btn btn-primary btn-m">Update</button>
+            <a href="/home"><button type="button" class="btn btn-secondary btn-m">Cancel</button></a>
+            </p>
+        </form>
+    </div>
+{% endblock %}
