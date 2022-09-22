@@ -3,6 +3,7 @@
 <h1 align="center">{% block header %}Posts</h1>{% endblock %}
 <div id="posts">
 {% for post in posts %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
     <div class="card border-dark">
         <div class="card-header d-flex justify-content-between align-iteams-center">
             <a href="/posts/{{ post.user.username }}">{{post.user.username}}</a>
@@ -18,9 +19,9 @@
 
                 {% if user.id == post.author %}
                 <div class="btn-group">
-                    <button 
-                    type="button" 
-                    class="btn btn-sm btn-primary dropdown-toggle" 
+                    <button
+                    type="button"
+                    class="btn btn-sm btn-primary dropdown-toggle"
                     data-bs-toggle="dropdown"></button>
                     <ul class="dropdown-menu">
                         <li>
@@ -28,28 +29,28 @@
                         </li>
                     </ul>
                 </div>
-                {% endif %} 
+                {% endif %}
             </div>
         </div>
-        <div class="card-body"> 
+        <div class="card-body">
             <div class="card-text">{{post.text}}</div>
             <br>
            <div class="collapse" id="comments-{{post.id}}">
-                <div class="card"> 
+                <div class="card">
                     <div class="card-body" id="comments-expanded-{{post.id}}">
                         {% for comment in post.comments %}
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
-                                    <a href="/posts/{{comment.user.username}}">{{comment.user.username}}  
+                                    <a href="/posts/{{comment.user.username}}">{{comment.user.username}}
                                     </a>: {{comment.text}}
                                 </div>
                                 <div>
                                     <small class="text-muted">{{comment.date_created}}</small>
                                     {% if user.id == comment.author or user.id == post.author %}
                                     <div class="btn-group">
-                                        <button 
-                                        type="button" 
-                                        class="btn btn-sm btn-primary dropdown-toggle" 
+                                        <button
+                                        type="button"
+                                        class="btn btn-sm btn-primary dropdown-toggle"
                                         data-bs-toggle="dropdown"></button>
                                         <ul class="dropdown-menu">
                                             <li>
@@ -59,7 +60,7 @@
                                     </div>
                                     {% endif %}
                                 </div>
-                            </div> 
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
