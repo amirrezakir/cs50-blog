@@ -1,8 +1,7 @@
 body {
-  background-color: #000960;
-  font-size: 1.6rem;
+  background-color: #A5C9CA;
   font-family: "Open Sans", sans-serif;
-  color: #2b3e51;
+  color: #2C3333;
 }
 
 h2 {
@@ -18,7 +17,7 @@ a,
 a:link,
 a:visited,
 a:active {
-  color: #0044D7;
+  color: #E7F6F2;
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
@@ -29,13 +28,13 @@ a:visited:focus,
 a:visited:hover,
 a:active:focus,
 a:active:hover {
-  color: #329dd5;
+  color: #E7F6F2;
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
 
 #login-form-wrap {
-  background-color: #fff;
+  background-color: #E7F6F2;
   width: 35%;
   margin: 30px auto;
   text-align: center;
@@ -126,7 +125,7 @@ input[type="email"]:valid ~ .validation span:last-child {
 input[type="submit"] {
   border: none;
   display: block;
-  background-color: #3ca9e2;
+  background-color: #395B64;
   color: #fff;
   font-weight: bold;
   text-transform: uppercase;
@@ -146,8 +145,8 @@ input[type="submit"]:hover {
 }
 
 #create-account-wrap {
-  background-color: #E44E50;
-  color: #565656;
+  background-color: #2C3333;
+  color: #E7F6F2;
   font-size: 14px;
   width: 100%;
   padding: 10px 0;
