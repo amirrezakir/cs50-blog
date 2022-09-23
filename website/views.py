@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from flask_login import login_required, current_user
 from .models import Post, User, Comment, Like
 from . import db
+import os
 
 views = Blueprint("views", __name__)
 
@@ -43,7 +44,7 @@ def delete_post(id):
     if not post:
         flash("Post does not exist.", category="erorr")
 
-    elif current_user.id == post.id:
+    elif current_user.id != post.id:
         flash("You can\'n delete this post!", category="erorr")
         
     else:
@@ -123,15 +124,25 @@ def like_post(post_id):
     return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author, post.likes)})
 
 
+
 @views.route("/profile/<id>", methods=["GET", "POST"])
 @login_required
 def profile(id):
     image_file = url_for('static', filename='pictures/' + current_user.image_file)
     new_user = User.query.get(id)
+    
 
     if request.method == "POST":
         new_user.username = request.form.get("username")
         new_user.email = request.form.get("email")
+
+        if request.files:
+            profile_pic = request.files["profile_pic"]
+            profile_pic.save(os.path.join(views.config["IMAGE_UPLOADS"], profile_pic.filename))
+
+            print("image saved")
+
+            return redirect(request.url)
 
         try:
             db.session.commit()
@@ -142,4 +153,5 @@ def profile(id):
             return redirect(url_for("views.home"))
 
     else:
-        return render_template("profile.html", image_file=image_file, user=current_user.id, new_user=new_user)
+        return render_template("profile.html", image_file=image_file, user=current_user.id, 
+        new_user=new_user)

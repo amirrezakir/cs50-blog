@@ -9,7 +9,7 @@
             </div>
         </div>
         <h2>Profile</h2>
-        <form id="login-form" method="post" action="/profile/{{ new_user.id }}">
+        <form enctype="multipart/form-data" method="post" action="/profile/{{ new_user.id }}">
             <p>
             <input type="text" id="username" name="username" value="{{ new_user.username }}" required>
             <i class="validation"><span></span><span></span></i>
@@ -19,7 +19,15 @@
             <i class="validation"><span></span><span></span></i>
             </p>
             <p>
-            <button type="submit" class="btn btn-primary btn-m">Update</button>
+            <button type="submit" class="btn btn-primary btn-m">Submit</button>
+            <div class="form-group">
+                <label>Select image</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="profile_pic" id="profile_pic">
+                    
+                    <button type="submit" class="btn btn-primary">Upload image</button>
+                </div>
+            </div>
             <a href="/home"><button type="button" class="btn btn-secondary btn-m">Cancel</button></a>
             </p>
         </form>
