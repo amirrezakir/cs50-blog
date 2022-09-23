@@ -1,4 +1,3 @@
-from flask_wtf.file import FileField
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
@@ -8,7 +7,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150), unique=True)
     email = db.Column(db.String(150), unique=True)
     image_file = db.Column(db.String(20), nullable=False, default="profile.jpg")
-    profile_pic= FileField("profile pic")
     password = db.Column(db.String(150))
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     posts = db.relationship('Post', backref='user', passive_deletes=True)

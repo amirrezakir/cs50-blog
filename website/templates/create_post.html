@@ -1,18 +1,49 @@
 {% extends "base.html" %} {% block title %}Create Post{% endblock %}
+
+
 {% block content %}
-<h1 align="center">Make Post</h1>
-
-<form method="POST">
-    <input type="text" name="title" id="title" class="form-contorol">
-    <textarea name="text" id="text" class="form-control"></textarea>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+<style>
+    input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+   }
+    button[type=submit] {
+        width: 100%;
+        background-color: #395B64;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
+<body>
     <br>
+    <h1 align="center">New Post</h1>
 
-    <div align="center">
-        <button class="btn btn-lg btn-primary" type="submit">Post</button> 
+    <form method="POST">
+        <label for="fname">title: </label><br>
+        <input type="text" name="title" id="title" class="form-contorol">
+        <br>
+        <label for="fname">tweet: </label><br>
+        <textarea name="text" id="text" class="form-control"></textarea>
+        <br>
+
+        <div align="Right" class="post">
+            <button class="btn btn-lg btn-primary" type="submit">Post</button>
+        </div>
+    </form>
+    <br>
+    <div align="Left">
+        <a href="/home"><button type="button" class="btn btn-secondary btn-lg">Back</button></a>
     </div>
-</form>
-<br>
-<div align="center">
-    <a href="/home"><button type="button" class="btn btn-secondary btn-lg">Back</button></a>
-</div>
+</body>
+
 {% endblock %}

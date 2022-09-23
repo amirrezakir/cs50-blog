@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Sing Up{% endblock %}
-{% block link %}<link rel="stylesheet" href="{{ url_for('static', filename='styles/singup.css') }}">{% endblock %}
-
+{% block link %}
+{% endblock %}
 {% block content %}
+<head>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/singup.css') }}">
+</head>
 	<div id="login-form-wrap">
 	  <h2>Sing UP</h2>
 	  <form id="login-form" method="post">
@@ -21,11 +24,11 @@
         <i class="validation"><span></span><span></span></i>
         </p>
 		<p>
-		<input type="submit" id="login" value="Login">
+		<input type="submit" id="login" value="singup">
 		</p>
 	  </form>
 	  <div id="create-account-wrap">
-		<p>Not a member? <a href="/sing-up">Create Account</a><p>
+		<p>Do you have an account?  <a href="/login">login</a><p>
 	  </div>
 	</div>
 

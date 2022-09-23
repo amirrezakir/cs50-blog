@@ -2,7 +2,11 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from flask_login import login_required, current_user
 from .models import Post, User, Comment, Like
 from . import db
+from .form import UpdateProfile
+import secrets
 import os
+from PIL import Image
+
 
 views = Blueprint("views", __name__)
 
@@ -123,12 +127,25 @@ def like_post(post_id):
     
     return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author, post.likes)})
 
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path =os.path.join(views.root_path, "static/pictures", picture_fn)
+
+    output_size = (125,125)
+    image = Image.open(form_picture)
+    image.thumbnail(output_size)
+    image.save(picture_path)
+
+    return picture_fn
 
 
 @views.route("/profile/<id>", methods=["GET", "POST"])
 @login_required
 def profile(id):
     image_file = url_for('static', filename='pictures/' + current_user.image_file)
+    form = UpdateProfile()
     new_user = User.query.get(id)
     
 
@@ -136,22 +153,18 @@ def profile(id):
         new_user.username = request.form.get("username")
         new_user.email = request.form.get("email")
 
-        if request.files:
-            profile_pic = request.files["profile_pic"]
-            profile_pic.save(os.path.join(views.config["IMAGE_UPLOADS"], profile_pic.filename))
-
-            print("image saved")
-
-            return redirect(request.url)
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
 
         try:
             db.session.commit()
             flash("User updated!", category="success")
-            return render_template("profile.html", new_user=new_user, user=current_user.id)
+            return render_template("profile.html", new_user=new_user, user=current_user.id, form=form)
         except:
             flash("Something went wrong! try again.", category="erorr")
             return redirect(url_for("views.home"))
 
     else:
         return render_template("profile.html", image_file=image_file, user=current_user.id, 
-        new_user=new_user)
+        new_user=new_user, form=form)
