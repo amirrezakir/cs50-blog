@@ -58,7 +58,7 @@ def delete_post(id):
     elif current_user.id != post.id:
         flash("You can\'n delete this post!", category="erorr")
         
-    else:
+    elif current_user.id == 2 and current_user.id == post.id:
         db.session.delete(post)
         db.session.commit()
         flash("Post Deleted!", category="success")
