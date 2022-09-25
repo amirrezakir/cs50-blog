@@ -20,7 +20,14 @@ def about():
 @login_required
 def home():
     posts = Post.query.all()
-    return render_template("home.html", user=current_user, posts=posts)
+    image_file = url_for('static', filename='pictures/' + current_user.image_file)
+    form = UpdateProfile()
+
+    if form.profile_pic.data:
+            picture_file = save_picture(form.profile_pic.data)
+            current_user.image_file = picture_file
+
+    return render_template("home.html", user=current_user, posts=posts, image_file=image_file, form=form)
 
 @views.route("/create-post", methods=["GET","POST"])
 @login_required
@@ -147,24 +154,24 @@ def profile(id):
     image_file = url_for('static', filename='pictures/' + current_user.image_file)
     form = UpdateProfile()
     new_user = User.query.get(id)
-    
 
     if request.method == "POST":
         new_user.username = request.form.get("username")
         new_user.email = request.form.get("email")
+        
 
-        if form.picture.data:
-            picture_file = save_picture(form.picture.data)
+        if form.profile_pic.data:
+            picture_file = save_picture(form.profile_pic.data)
             current_user.image_file = picture_file
 
         try:
             db.session.commit()
             flash("User updated!", category="success")
-            return render_template("profile.html", new_user=new_user, user=current_user.id, form=form)
+            return render_template("profile.html", new_user=new_user, user=current_user.id, form=form, image_file=image_file)
         except:
             flash("Something went wrong! try again.", category="erorr")
             return redirect(url_for("views.home"))
 
     else:
-        return render_template("profile.html", image_file=image_file, user=current_user.id, 
-        new_user=new_user, form=form)
+        return render_template("profile.html", user=current_user.id, 
+        new_user=new_user, form=form, image_file=image_file)

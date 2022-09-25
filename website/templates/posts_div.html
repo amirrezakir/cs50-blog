@@ -6,6 +6,13 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
     <div class="card border-dark">
         <div class="card-header d-flex justify-content-between align-iteams-center">
+
+            {% if post.user.image_file %}
+                <img src="{{ image_file }}" align="left" class="rounded-circle account-img" width="50">
+            {% else %}
+                <img src="{{ url_for('static', filename='pictures/profile.jpg') }}" align="left" class="rounded-circle account-img" width="50">
+            {% endif %}
+
             <a href="/posts/{{ post.user.username }}">{{post.user.username}}</a>
             <div class="card-text">{{post.title}}</div>
             <div>
