@@ -5,7 +5,7 @@
 {% for post in posts %}
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
     <div class="card border-dark">
-        <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="card-header d-flex justify-content-between align-iteams-center">
 
             {% if post.user.image_file %}
                 <img src="{{ url_for('static', filename='pictures/' + post.user.image_file) }}" align="left"  class="rounded-circle account-img" width="50">
@@ -24,7 +24,7 @@
                 <i class="far fa-thumbs-up" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
                 {% endif %}
 
-                {% if user.id == post.author or current_user.id == 2 %}
+                {% if user.id == post.author %}
                 <div class="btn-group">
                     <button
                     type="button"
