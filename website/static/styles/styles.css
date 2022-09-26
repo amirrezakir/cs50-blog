@@ -1,8 +1,8 @@
 body {
     background-color: #A5C9CA;
-    font-family: "Open Sans", sans-serif;
     color: #2C3333;
 }
 h1 {
     color: #395B64
 }
+html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
