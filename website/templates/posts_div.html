@@ -8,7 +8,7 @@
         <div class="card-header d-flex justify-content-between align-items-center">
 
             {% if post.user.image_file %}
-                <img src="{{ url_for('static', filename='pictures/' + post.user.image_file) }}" align="left" class="rounded-circle account-img" width="50">
+                <img src="{{ url_for('static', filename='pictures/' + post.user.image_file) }}" align="left"  class="rounded-circle account-img" width="50">
             {% else %}
                 <img src="{{ url_for('static', filename='pictures/profile.jpg') }}" align="left" class="rounded-circle account-img" width="50">
             {% endif %}
