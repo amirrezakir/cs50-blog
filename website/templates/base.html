@@ -7,47 +7,58 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/b0da5b9f43.js"
     crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {% block link %}{% endblock %}
     <title> {% block title %} {% endblock %}</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand" href="/about">social network </a>
-
-            <div class="collapse navbar-collapse" id="navbar">
-                <div class="navbar-nav">
-
-                    <a class="nav-iteam nav-link right" href="/about">home</a>
-                    <a class="nav-iteam nav-link" href="/home">Posts</a>
-
-                    {% if user.is_authenticated %}
-
-                    <a class="nav-iteam nav-link" href="/create-post">Create Post</a>
-                    <a class="nav-iteam nav-link right" href="/profile/{{ user.id }}">Profile</a>
-                    <a class="nav-iteam nav-link right" href="/logout">Logout</a>
-
-                    {% else %}
-                    <a class="nav-iteam nav-link left" href="/login">Login</a>
-                    <a class="nav-iteam nav-link left" href="/sing-up">Sing Up</a>
-                    {% endif %}
-
-                </div>
-            </div>
+    <nav>
+    <div class="w3-top">
+        <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+         <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+         <a href="/about" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>social network</a>
+         <a href="/home" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Posts"><i class="fa fa-globe"></i></a>
+         {% if user.is_authenticated %}
+         <a href="/create-post" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="create-post"><i class="fas fa-plus"></i></a>
+         <a href="/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+         <div class="w3-dropdown-hover w3-hide-small">
+         </div>
+         <a href="/profile/{{ user.id }}" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
+           <img src="https://www.w3schools.com/w3images/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+         </a>
+         {% else %}
+         <a href="/login" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Login"><i class="fas fa-user-alt"></i></a>
+         <a href="/sing-up" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Sing Up"><i class="fas fa-user-plus"></i></a>
+         {% endif %}
         </div>
+       </div>
     </nav>
+
+       
+       <!-- Navbar on small screens -->
+       <div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
+         <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
+         <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
+         <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
+         <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
+       </div>
     {% with messages = get_flashed_messages(with_categories=True) %}
         {% if messages %}
             {% for categori, message in messages %}
             {% if categori == "erorr" %}
+                <br>
+                <br>
                 <div class="alert alert-danger alert-dismissible  fade show" role="alert">
                 {{ message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             {% else %}
+                <br>
+                <br>
                 <div class="alert alert-success alert-dismissible  fade show" role="alert">
                 {{ message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
