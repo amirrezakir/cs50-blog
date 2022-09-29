@@ -2,102 +2,155 @@
 {% block content %}
 <h1 align="center">{% block header %}Posts</h1>{% endblock %}
 <div id="posts">
-{% for post in posts %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
-    <div class="card border-dark">
-        <div class="card-header d-flex justify-content-between align-iteams-center">
-
-            {% if post.user.image_file %}
-                <img src="{{ url_for('static', filename='pictures/' + post.user.image_file) }}" align="left"  class="rounded-circle account-img" width="50">
-            {% else %}
-                <img src="{{ url_for('static', filename='pictures/profile.jpg') }}" align="left" class="rounded-circle account-img" width="50">
-            {% endif %}
-
-            <a href="/posts/{{ post.user.username }}">{{post.user.username}}</a>
-            <div class="card-text">{{post.title}}</div>
-            <div>
-                <span id="likes-count-{{post.id}}">{{ post.likes|length }}</span>
-
-                {% if user.id in post.likes|map(attribute="author")|list %}
-                <i class="fas fa-thumbs-up" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
-                {% else %}
-                <i class="far fa-thumbs-up" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
-                {% endif %}
-
-                {% if user.id == post.author %}
-                <div class="btn-group">
-                    <button
-                    type="button"
-                    class="btn btn-sm btn-primary dropdown-toggle"
-                    data-bs-toggle="dropdown"></button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a>
-                        </li>
-                    </ul>
-                </div>
-                {% endif %}
-            </div>
+<!DOCTYPE html>
+<html>
+<head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+</style>
+</head>
+<body class="w3-theme-l5">
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
+  <!-- The Grid -->
+  <div class="w3-row">
+    <!-- Left Column -->
+    <div class="w3-col m3">
+      <!-- Profile -->
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+         <h4 class="w3-center">My Profile</h4>
+         {% if post.user.image_file %}
+         <p class="w3-center"><img src="{{ url_for('static', filename='pictures/' + post.user.image_file) }}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         {% else %}
+         <p class="w3-center"><img src="{{ url_for('static', filename='pictures/profile.jpg') }}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         {% endif %}
+         <hr>
+         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{post.user.username}}</p>
         </div>
-        <div class="card-body">
-            <div class="card-text">{{post.text}}</div>
-            <br>
-           <div class="collapse" id="comments-{{post.id}}">
-                <div class="card">
-                    <div class="card-body" id="comments-expanded-{{post.id}}">
-                        {% for comment in post.comments %}
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <a href="/posts/{{comment.user.username}}">{{comment.user.username}}
-                                    </a>: {{comment.text}}
-                                </div>
-                                <div>
-                                    <small class="text-muted">{{comment.date_created}}</small>
-                                    {% if user.id == comment.author or user.id == post.author %}
-                                    <div class="btn-group">
-                                        <button
-                                        type="button"
-                                        class="btn btn-sm btn-primary dropdown-toggle"
-                                        data-bs-toggle="dropdown"></button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="/delete-comment/{{comment.id}}" class="dropdown-item">Delete</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <br>
-           </div>
-           <p class="card-text">
-            {% if post.comments|length > 0 %}
-                    <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
-                        <small>View {{post.comments|length}} Comments</small>
-                    </a>
-            {% else %}
-                    <small class="text-muted">No Comments</small>
-            {% endif %}
-           </p>
-
-            <form class="mb-3 input-group" method="post" action="/create-comment/{{post.id}}">
-                <input type="text" class="form-control" id="text" name="text" placeholder="Comment something" autocomplete="off">
-                <button class="btn btn-primary" type="submit">Comment</button>
-            </form>
+      </div>
+      <br>
+    
+      <br>
+      
+      <!-- Interests --> 
+      <div class="w3-card w3-round w3-white w3-hide-small">
+        <div class="w3-container">
+          <p>Interests</p>
+          <p>
+            <span class="w3-tag w3-small w3-theme-d5">News</span>
+            <span class="w3-tag w3-small w3-theme-d4">W3Schools</span>
+            <span class="w3-tag w3-small w3-theme-d3">Labels</span>
+            <span class="w3-tag w3-small w3-theme-d2">Games</span>
+            <span class="w3-tag w3-small w3-theme-d1">Friends</span>
+            <span class="w3-tag w3-small w3-theme">Games</span>
+            <span class="w3-tag w3-small w3-theme-l1">Friends</span>
+            <span class="w3-tag w3-small w3-theme-l2">Food</span>
+            <span class="w3-tag w3-small w3-theme-l3">Design</span>
+            <span class="w3-tag w3-small w3-theme-l4">Art</span>
+            <span class="w3-tag w3-small w3-theme-l5">Photos</span>
+          </p>
         </div>
-        <div class="card-footer text-muted">{{post.date_created}}</div>
-    </div>
-    <br>
-{% endfor %}
-{% block footer %}
+      </div>
+      <br>
+      
+      <!-- Alert Box -->
+      <div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+        <span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-l3 w3-display-topright">
+          <i class="fa fa-remove"></i>
+        </span>
+        <p><strong>Hey!</strong></p>
+        <p>People are looking at your profile. Find out who.</p>
+      </div>
+    
+      
+<!-- End Left Column -->
 </div>
-    <div align="center">
-        <a href="/create-post"><button type="button" class="btn btn-primary btn-lg">
-            Create a Post
-        </button></a>
+    
+<!-- Middle Column -->
+<div class="w3-col m7">
+
+  <div class="w3-row-padding">
+    <div class="w3-col m12">
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container w3-padding">
+          <h6 class="w3-opacity">Social Media template by w3.css</h6>
+          <p contenteditable="true" class="w3-border w3-padding">Status: Feeling Blue</p>
+          <button type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button> 
+        </div>
+      </div>
     </div>
-{% endblock %}
-{% endblock %}
+  </div>
+  
+  <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+    <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+    <span class="w3-right w3-opacity">1 min</span>
+    <h4>John Doe</h4><br>
+    <hr class="w3-clear">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <div class="w3-row-padding" style="margin:0 -16px">
+        <div class="w3-half">
+          <img src="/w3images/lights.jpg" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
+        </div>
+        <div class="w3-half">
+          <img src="/w3images/nature.jpg" style="width:100%" alt="Nature" class="w3-margin-bottom">
+      </div>
+    </div>
+    <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button> 
+    <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button> 
+  </div>
+  
+
+    <!-- End Right Column -->
+    </div>
+    
+  <!-- End Grid -->
+  </div>
+  
+<!-- End Page Container -->
+</div>
+<br>
+
+<!-- Footer -->
+<footer class="w3-container w3-theme-d3 w3-padding-16">
+  <h5>Footer</h5>
+</footer>
+
+<footer class="w3-container w3-theme-d5">
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+ 
+<script>
+// Accordion
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-theme-d1";
+  } else { 
+    x.className = x.className.replace("w3-show", "");
+    x.previousElementSibling.className = 
+    x.previousElementSibling.className.replace(" w3-theme-d1", "");
+  }
+}
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+</body>
+</html> 
